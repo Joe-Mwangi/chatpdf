@@ -30,50 +30,50 @@ export const appRouter = router({
     }
     return { success: true };
   }),
-  //   getUserFiles: privateProcedure.query(async ({ ctx }) => {
-  //     const { userId } = ctx;
-  //     return await db.file.findMany({
-  //       where: {
-  //         userId,
-  //       },
-  //     });
-  //   }),
-  //   createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
-  //     const { userId } = ctx;
-  //     const billingUrl = absoluteUrl("/dashboard/billing");
-  //     if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
-  //     const dbUser = await db.user.findFirst({
-  //       where: {
-  //         id: userId,
-  //       },
-  //     });
-  //     if (!dbUser) throw new TRPCError({ code: "UNAUTHORIZED" });
-  //     const subscriptionPlan = await getUserSubscriptionPlan();
-  //     if (subscriptionPlan.isSubscribed && dbUser.stripeCustomerId) {
-  //       const stripeSession = await stripe.billingPortal.sessions.create({
-  //         customer: dbUser.stripeCustomerId,
-  //         return_url: billingUrl,
-  //       });
-  //       return { url: stripeSession.url };
-  //     }
-  //     const stripeSession = await stripe.checkout.sessions.create({
-  //       success_url: billingUrl,
-  //       cancel_url: billingUrl,
-  //       payment_method_types: ["card", "paypal"],
-  //       mode: "subscription",
-  //       billing_address_collection: "auto",
-  //       line_items: [
-  //         {
-  //           price: PLANS.find((plan) => plan.name === "Pro")?.price.priceIds.test,
-  //           quantity: 1,
-  //         },
-  //       ],
-  //       metadata: {
-  //         userId: userId,
-  //       },
+  getUserFiles: privateProcedure.query(async ({ ctx }) => {
+    const { userId } = ctx;
+    return await db.file.findMany({
+      where: {
+        userId,
+      },
+    });
+  }),
+  // createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
+  //   const { userId } = ctx;
+  //   const billingUrl = absoluteUrl("/dashboard/billing");
+  //   if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+  //   const dbUser = await db.user.findFirst({
+  //     where: {
+  //       id: userId,
+  //     },
+  //   });
+  //   if (!dbUser) throw new TRPCError({ code: "UNAUTHORIZED" });
+  //   const subscriptionPlan = await getUserSubscriptionPlan();
+  //   if (subscriptionPlan.isSubscribed && dbUser.stripeCustomerId) {
+  //     const stripeSession = await stripe.billingPortal.sessions.create({
+  //       customer: dbUser.stripeCustomerId,
+  //       return_url: billingUrl,
   //     });
   //     return { url: stripeSession.url };
-  //   }),
+  //   }
+  // const stripeSession = await stripe.checkout.sessions.create({
+  //   success_url: billingUrl,
+  //   cancel_url: billingUrl,
+  //   payment_method_types: ["card", "paypal"],
+  //   mode: "subscription",
+  //   billing_address_collection: "auto",
+  //   line_items: [
+  //     {
+  //       price: PLANS.find((plan) => plan.name === "Pro")?.price.priceIds.test,
+  //       quantity: 1,
+  //     },
+  //   ],
+  //   metadata: {
+  //     userId: userId,
+  //   },
+  // });
+  // return { url: stripeSession.url };
+  // }),
   //   getFileMessages: privateProcedure
   //     .input(
   //       z.object({
@@ -131,37 +131,37 @@ export const appRouter = router({
   //       if (!file) return { status: "PENDING" as const };
   //       return { status: file.uploadStatus };
   //     }),
-  //   getFile: privateProcedure
-  //     .input(z.object({ key: z.string() }))
-  //     .mutation(async ({ ctx, input }) => {
-  //       const { userId } = ctx;
-  //       const file = await db.file.findFirst({
-  //         where: {
-  //           key: input.key,
-  //           userId,
-  //         },
-  //       });
-  //       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
-  //       return file;
-  //     }),
-  //   deleteFile: privateProcedure
-  //     .input(z.object({ id: z.string() }))
-  //     .mutation(async ({ ctx, input }) => {
-  //       const { userId } = ctx;
-  //       const file = await db.file.findFirst({
-  //         where: {
-  //           id: input.id,
-  //           userId,
-  //         },
-  //       });
-  //       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
-  //       await db.file.delete({
-  //         where: {
-  //           id: input.id,
-  //         },
-  //       });
-  //       return file;
-  //     }),
+  getFile: privateProcedure
+    .input(z.object({ key: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const file = await db.file.findFirst({
+        where: {
+          key: input.key,
+          userId,
+        },
+      });
+      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+      return file;
+    }),
+  deleteFile: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const file = await db.file.findFirst({
+        where: {
+          id: input.id,
+          userId,
+        },
+      });
+      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.file.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return file;
+    }),
 });
 
 export type AppRouter = typeof appRouter;
