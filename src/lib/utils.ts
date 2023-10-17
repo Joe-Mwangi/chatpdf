@@ -42,7 +42,7 @@ export function constructMetadata({
       title,
       description,
       images: [image],
-      creator: "@joshtriedcoding",
+      creator: "@Joe_Mwa_ngi",
     },
     icons,
     metadataBase: new URL("https://ChatwithDocs-ai.vercel.app"),
