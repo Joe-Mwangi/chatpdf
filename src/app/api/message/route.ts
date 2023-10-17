@@ -50,6 +50,7 @@ export const POST = async (req: NextRequest) => {
   const pineconeIndex = pinecone.Index("chatdocs");
 
   const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+    // @ts-ignore
     pineconeIndex,
     namespace: file.id,
   });
