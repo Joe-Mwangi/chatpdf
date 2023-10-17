@@ -13,8 +13,8 @@ export function absoluteUrl(path: string) {
 }
 
 export function constructMetadata({
-  title = "ChatDocs",
-  description = "ChatDocs is a software to make chatting to your PDF files easy.",
+  title = "ChatDocs - the SaaS for students",
+  description = "ChatDocs is an open-source software to make chatting to your PDF files easy.",
   image = "/thumbnail.png",
   icons = "/favicon.ico",
   noIndex = false,
@@ -45,7 +45,7 @@ export function constructMetadata({
       creator: "@joshtriedcoding",
     },
     icons,
-    metadataBase: new URL("https://quill-jet.vercel.app"),
+    metadataBase: new URL("https://ChatwithDocs-ai.vercel.app"),
     themeColor: "#FFF",
     ...(noIndex && {
       robots: {
