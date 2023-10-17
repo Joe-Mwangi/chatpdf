@@ -138,6 +138,7 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
                 {...getInputProps()}
                 type="file"
                 id="dropzone-file"
+                accept="application/pdf"
                 className="hidden"
               />
             </label>
