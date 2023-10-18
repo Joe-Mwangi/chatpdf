@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 
-import Dropzone from "react-dropzone";
+import Dropzone, { useDropzone } from "react-dropzone";
 import { Cloud, File, Loader2 } from "lucide-react";
 import { Progress } from "./ui/progress";
 import { useUploadThing } from "@/lib/uploadthing";
@@ -47,6 +47,11 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
     return interval;
   };
 
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "application/pdf": [],
+    },
+  });
   return (
     <Dropzone
       multiple={false}
@@ -84,7 +89,7 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
         startPolling({ key });
       }}
     >
-      {({ getRootProps, getInputProps, acceptedFiles }) => (
+      {() => (
         <div
           {...getRootProps()}
           className="border h-64 m-4 border-dashed border-gray-300 rounded-lg"
