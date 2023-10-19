@@ -91,10 +91,9 @@ const onUploadComplete = async ({
       openAIApiKey: process.env.OPENAI_API_KEY,
     });
 
-    await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
+    const data = await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
       // @ts-ignore
       pineconeIndex,
-      namespace: createdFile.id,
     });
 
     await db.file.update({
@@ -106,6 +105,7 @@ const onUploadComplete = async ({
       },
     });
   } catch (err) {
+    console.log("error: ", err);
     await db.file.update({
       data: {
         uploadStatus: "FAILED",
