@@ -70,24 +70,29 @@ export const appRouter = router({
       return { url: stripeSession.url };
     }
 
-    const stripeSession = await stripe.checkout.sessions.create({
-      success_url: billingUrl,
-      cancel_url: billingUrl,
-      payment_method_types: ["card", "paypal"],
-      mode: "subscription",
-      billing_address_collection: "auto",
-      line_items: [
-        {
-          price: PLANS.find((plan) => plan.name === "Pro")?.price.priceIds.test, // change to prod
-          quantity: 1,
+    try {
+      const stripeSession = await stripe.checkout.sessions.create({
+        success_url: billingUrl,
+        cancel_url: billingUrl,
+        payment_method_types: ["card", "paypal"],
+        mode: "subscription",
+        billing_address_collection: "auto",
+        line_items: [
+          {
+            price: PLANS.find((plan) => plan.name === "Pro")?.price.priceIds
+              .test,
+            quantity: 1,
+          },
+        ],
+        metadata: {
+          userId: userId,
         },
-      ],
-      metadata: {
-        userId: userId,
-      },
-    });
+      });
 
-    return { url: stripeSession.url };
+      return { url: stripeSession.url };
+    } catch (error) {
+      console.log("error: ", error);
+    }
   }),
 
   getFileMessages: privateProcedure
