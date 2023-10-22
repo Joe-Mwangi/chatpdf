@@ -22,7 +22,7 @@ const Navbar = () => {
             href="/"
             className="flex text-blue-600 text-xl z-40 font-semibold"
           >
-            <span>ChatWithPdf-Ai</span>
+            <span>Fether</span>
           </Link>
 
           <MobileNav isAuth={!!user} />
