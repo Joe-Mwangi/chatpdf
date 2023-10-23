@@ -4,6 +4,7 @@ import { ArrowRight, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import PricingMob from "./PricingMob";
 
 const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -79,13 +80,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                 </li>
                 <li className="my-3 h-px w-full bg-gray-300" />
                 <li>
-                  <Link
-                    onClick={() => closeOnCurrent("/pricing")}
-                    className="flex items-center w-full font-semibold"
-                    href="/pricing"
-                  >
-                    Pricing
-                  </Link>
+                  <PricingMob closeOnCurrent={closeOnCurrent} />
                 </li>
                 <li className="my-3 h-px w-full bg-gray-300" />
                 <li>
